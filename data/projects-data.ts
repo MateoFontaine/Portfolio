@@ -33,7 +33,7 @@ export const projectsData = [
     github: "https://github.com/MateoFontaine/Iam",
     demo: "https://iampaw.netlify.app/perros/1/",
     details:
-      "iAmPaw nació como mi proyecto personal para facilitar el cuidado de las mascotas. Creé un sistema innovador que utiliza chapitas con códigos QR para que, al escanearlas, se pueda acceder rápidamente a toda la información importante del animal. Así, en situaciones de emergencia o para compartir datos con veterinarios y cuidadores, la identificación y atención de la mascota es mucho más sencilla. Es una solución práctica y moderna que diseñé pensando en el bienestar y la seguridad de nuestras mascotas.",
+      "IamPaw nació como mi proyecto personal para facilitar el cuidado de las mascotas. Creé un sistema innovador que utiliza chapitas con códigos QR para que, al escanearlas, se pueda acceder rápidamente a toda la información importante del animal. Así, en situaciones de emergencia o para compartir datos con veterinarios y cuidadores, la identificación y atención de la mascota es mucho más sencilla. Es una solución práctica y moderna que diseñé pensando en el bienestar y la seguridad de nuestras mascotas.",
   },
   {
     id: 4,
