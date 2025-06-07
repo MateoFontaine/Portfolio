@@ -8,8 +8,8 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Mateo Fontaine - Desarrollador Frontend",
   description:
-    "Portfolio de Mateo Fontaine, desarrollador web especializado en React, Firebase y tecnologías modernas.",
-  keywords: "desarrollador, frontend, React, Firebase, TailwindCSS, portfolio",
+    "Portfolio de Mateo Fontaine, desarrollador web dedicado a crear soluciones prácticas y experiencias digitales modernas.",
+  keywords: "desarrollador, frontend, aplicaciones web, React, Firebase, TailwindCSS, portfolio, proyectos, tecnología moderna",
   authors: [{ name: "Mateo Fontaine" }],
   openGraph: {
     title: "Mateo Fontaine - Desarrollador Frontend",
@@ -17,7 +17,7 @@ export const metadata: Metadata = {
       "Portfolio de Mateo Fontaine, desarrollador web especializado en React, Firebase y tecnologías modernas.",
     type: "website",
   },
-    generator: 'v0.dev'
+  generator: 'v0.dev'
 }
 
 export default function RootLayout({
