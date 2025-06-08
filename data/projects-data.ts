@@ -15,7 +15,7 @@ export const projectsData = [
     id: 2,
     title: "Experiencias Allona",
     description: "Sitio Web a Hostería en Pinamar con reservas fáciles vía WhatsApp.",
-    image: "/experienciasAllona.jpeg?height=200&width=300",
+    image: "/ExperienciasAllona.jpeg?height=200&width=300",
     technologies: ["Next.js", "TailwindCSS"],
     category: "web",
     github: "https://github.com/MateoFontaine/ExperienciasAllona",
