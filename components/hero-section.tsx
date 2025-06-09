@@ -11,8 +11,8 @@ interface HeroSectionProps {
 
 export function HeroSection({ darkMode, scrollToSection }: HeroSectionProps) {
   return (
-    <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 opacity-10" />
+    <section className="min-h-screen flex items-center justify-center relative overflow-hidden w-full">
+      < div className="absolute inset-0 bg-gradient-to-br from-blue-600 via-purple-600 to-pink-600 opacity-10" />
 
       <motion.div
         initial={{ opacity: 0, y: 30 }}
@@ -65,7 +65,7 @@ export function HeroSection({ darkMode, scrollToSection }: HeroSectionProps) {
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 cursor-pointer"
+        className="absolute bottom-8 w-full flex justify-center cursor-pointer"
         onClick={() => scrollToSection("about")}
       >
         <motion.div
@@ -73,10 +73,11 @@ export function HeroSection({ darkMode, scrollToSection }: HeroSectionProps) {
           transition={{ duration: 2, repeat: Number.POSITIVE_INFINITY, delay: 1.5 }}
         >
           <ChevronDown
-            className={`w-8 h-8 ${darkMode ? "text-white" : "text-gray-900"} hover:scale-110 transition-transform`}
+            className={`w-8 h-8 ${darkMode ? "text-white" : "text-gray-900"} hover:scale-110 transition-transform `}
           />
         </motion.div>
       </motion.div>
-    </section>
+    </section >
   )
 }
+
