@@ -153,19 +153,36 @@ export function ContactSection({ darkMode }: ContactSectionProps) {
                     {error}
                   </div>
                 )}
-                <div className="relative w-full overflow-hidden">
+                <div className="relative w-full overflow-hidden rounded-lg">
                   <Button
                     type="submit"
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white flex items-center justify-center relative"
                     disabled={loading}
                   >
+                    {/* Barra de progreso degradada y animada */}
                     {loading && (
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${progress}%` }}
                         transition={{ duration: 0.2, ease: "easeInOut" }}
-                        className="absolute left-0 top-0 h-full bg-blue-400/40 z-0"
-                        style={{ borderRadius: 8 }}
+                        className="absolute left-0 top-0 h-full z-0"
+                        style={{
+                          background: "linear-gradient(90deg, #60a5fa 0%, #a78bfa 100%)",
+                          filter: progress === 100 ? "drop-shadow(0 0 12px #a78bfa)" : "none",
+                          borderRadius: 8,
+                        }}
+                      />
+                    )}
+                    {/* Glow animado al 100% */}
+                    {loading && progress === 100 && (
+                      <motion.div
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: [0, 1, 0] }}
+                        transition={{ duration: 0.8 }}
+                        className="absolute inset-0 rounded-lg pointer-events-none"
+                        style={{
+                          boxShadow: "0 0 24px 8px #a78bfa",
+                        }}
                       />
                     )}
                     <span className="relative z-10">
