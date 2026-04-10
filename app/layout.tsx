@@ -6,15 +6,14 @@ import "./globals.css"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Mateo Fontaine - Desarrollador Frontend",
+  title: "Mateo Fontaine | Co-fundador de Devoys",
   description:
-    "Portfolio de Mateo Fontaine, desarrollador web dedicado a crear soluciones prácticas y experiencias digitales modernas.",
-  keywords: "desarrollador, frontend, aplicaciones web, React, Firebase, TailwindCSS, portfolio, proyectos, tecnología moderna",
+    "Transformo requerimientos en productos que funcionan.",
+  keywords: "desarrollador, frontend, React, Next.js, Firebase, Devoys, portfolio, proyectos, tecnología",
   authors: [{ name: "Mateo Fontaine" }],
   openGraph: {
-    title: "Mateo Fontaine - Desarrollador Frontend",
-    description:
-      "Portfolio de Mateo Fontaine, desarrollador web especializado en React, Firebase y tecnologías modernas.",
+    title: "Mateo Fontaine | Co-fundador de Devoys",
+    description: "Transformo requerimientos en productos que funcionan.",
     type: "website",
   },
   generator: 'v0.dev'
