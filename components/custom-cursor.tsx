@@ -45,11 +45,7 @@ export function CustomCursor() {
     }
   }, [])
 
-  // Hide cursor on mobile
-  if (typeof window !== "undefined" && window.innerWidth <= 768) {
-    return null
-  }
-
+  // Don't render anything on mobile (handled by isVisible state)
   if (!isVisible) return null
 
   return (
