@@ -13,7 +13,10 @@ export function MagneticButton({ children, className, ...props }: MagneticButton
   const isMobile = useIsMobile()
 
   // Disable magnetic effect on mobile (touch devices)
-  if (isMobile) {
+  // Only disable after we've determined we're on mobile (not during SSR)
+  const isEffectivelyMobile = isMobile === true
+
+  if (isEffectivelyMobile) {
     return (
       <button className={className} {...props}>
         {children}
