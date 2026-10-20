@@ -26,7 +26,13 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="es">
-      <body>{children}</body>
+      <body>
+        {/* without JS the loader never lifts, so give the scroll back */}
+        <noscript>
+          <style>{"html, html body { overflow: auto !important; } #loader { display: none; }"}</style>
+        </noscript>
+        {children}
+      </body>
     </html>
   )
 }

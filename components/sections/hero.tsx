@@ -30,10 +30,6 @@ export function Hero() {
       data-label="Inicio"
       className="relative flex min-h-svh flex-col justify-end px-6 pb-24 pt-32 md:px-12 md:pb-20"
     >
-      <p className="hero-fade mono-label absolute left-6 top-28 md:left-12">
-        Portfolio ’{String(new Date().getFullYear()).slice(2)}
-      </p>
-
       <h1 className="font-display text-[clamp(3.6rem,15.5vw,16rem)] font-bold uppercase leading-[0.82] tracking-[-0.045em]">
         <span className="hero-line block overflow-hidden pb-[0.06em]">
           <span className="block">Mateo</span>

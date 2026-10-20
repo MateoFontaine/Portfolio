@@ -9,6 +9,8 @@ export interface CaseStudy {
   github?: string
   demo?: string
   image: string
+  /** tall full-page capture of the live site, panned on hover in the 3D gallery */
+  preview?: string
 }
 
 export const caseStudies: CaseStudy[] = [
@@ -26,6 +28,7 @@ export const caseStudies: CaseStudy[] = [
     github: "https://github.com/MateoFontaine/MarmoleriaDodera",
     demo: "https://marmoleriadodera.com/",
     image: "/dodera.jpeg",
+    preview: "/previews/dodera.jpg",
   },
   {
     id: 2,
@@ -41,6 +44,7 @@ export const caseStudies: CaseStudy[] = [
     github: "https://github.com/MateoFontaine/ExperienciasAllona",
     demo: "https://experienciasallona.netlify.app/",
     image: "/ExperienciasAllona.jpeg",
+    preview: "/previews/allona.jpg",
   },
   {
     id: 3,
@@ -56,5 +60,6 @@ export const caseStudies: CaseStudy[] = [
     github: "https://github.com/MateoFontaine/Iam",
     demo: "https://iampaw.com.ar/",
     image: "/IamPaw.jpeg",
+    preview: "/previews/iampaw.jpg",
   },
 ]

@@ -26,6 +26,9 @@ export function Rig() {
     m.sx = damp(m.sx, m.x, 3.5, dt)
     m.sy = damp(m.sy, m.y, 3.5, dt)
 
+    world.click.age += dt
+    world.kick = damp(world.kick, 0, 2.4, dt)
+
     updatePalette(world.chapterPos)
 
     const t = clamp(world.chapterPos / (CHAPTER_N - 1), 0, 1)

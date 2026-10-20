@@ -16,6 +16,10 @@ export const world = {
   intro: 0,
   mouse: { x: 0, y: 0, sx: 0, sy: 0 },
   hover: -1,
+  /** last pointer press, in NDC; `age` is seconds since it happened */
+  click: { x: 0, y: 0, age: 99 },
+  /** 1 right after a press, decays to 0; makes the scene flinch */
+  kick: 0,
   anchors: [] as number[],
   reduced: false,
 }

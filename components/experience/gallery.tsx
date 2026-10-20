@@ -10,17 +10,25 @@ import { damp, world } from "@/lib/world"
 import { planeFrag, planeVert } from "./shaders"
 import { pal } from "./state"
 
+/** 0 → 1 → 0 triangle wave */
+const pingPong = (x: number) => {
+  const p = x % 2
+  return p < 1 ? p : 2 - p
+}
+const smooth = (x: number) => x * x * (3 - 2 * x)
+
 function ProjectPlane({ index, image }: { index: number; image: string }) {
   const narrow = useThree((s) => s.size.width < 768)
   const tex = useTexture(image) as Texture
   const group = useRef<Group>(null)
+  const play = useRef(0)
   const chapter = PROJECT_START + index
   const key = KEYS[chapter]
   const side = index % 2 === 0 ? 1 : -1
 
-  const w = narrow ? 3.3 : 5.4
+  const w = narrow ? 3.3 : 5.0
   const h = w * 0.5
-  const x = narrow ? key.x : key.x + side * 3.7
+  const x = narrow ? key.x : key.x + side * 3.4
   const y = narrow ? key.y + 1.5 : key.y + 0.1
   const baseRot = narrow ? 0 : -side * 0.24
 
@@ -44,6 +52,7 @@ function ProjectPlane({ index, image }: { index: number; image: string }) {
           uVel: { value: 0 },
           uActive: { value: 0 },
           uHover: { value: 0 },
+          uScroll: { value: 0 },
           uC: { value: new Color() },
         },
       }),
@@ -58,6 +67,12 @@ function ProjectPlane({ index, image }: { index: number; image: string }) {
     u.uPlaneAspect.value = w / h
     u.uActive.value = damp(u.uActive.value, 1 - Math.min(Math.abs(world.chapterPos - chapter), 1), 6, dt)
     u.uHover.value = damp(u.uHover.value, world.hover === index ? 1 : 0, 8, dt)
+
+    // hovering (or, on touch, being the active chapter) scrolls the captured site
+    const playing = world.hover === index || (narrow && u.uActive.value > 0.8)
+    if (playing) play.current += dt
+    else if (u.uScroll.value < 0.01) play.current = 0
+    u.uScroll.value = damp(u.uScroll.value, playing ? smooth(pingPong(play.current * 0.09)) : 0, playing ? 3 : 2.5, dt)
     u.uC.value.copy(pal[2])
 
     const g = group.current
@@ -82,7 +97,7 @@ export function Gallery() {
   return (
     <>
       {caseStudies.map((project, i) => (
-        <ProjectPlane key={project.id} index={i} image={project.image} />
+        <ProjectPlane key={project.id} index={i} image={project.preview ?? project.image} />
       ))}
     </>
   )

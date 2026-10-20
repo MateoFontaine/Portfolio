@@ -12,6 +12,12 @@ html {
   color-scheme: dark;
 }
 
+/* No scrolling (wheel, touch or keys) until the loader lifts; set by SmoothScroll */
+html:not(.intro-done),
+html:not(.intro-done) body {
+  overflow: hidden;
+}
+
 html.lenis,
 html.lenis body {
   height: auto;

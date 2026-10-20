@@ -54,7 +54,9 @@ function Project({ project, index }: { project: CaseStudy; index: number }) {
           ))}
         </dl>
 
-        <div className="mt-8 flex flex-wrap gap-3">
+        <p className="mono-label mt-7 hidden md:block">↳ Pasá el mouse y recorré el sitio</p>
+
+        <div className="mt-4 flex flex-wrap gap-3 md:mt-4">
           {project.demo && (
             <a
               href={project.demo}

@@ -19,6 +19,7 @@ export function Backdrop({ lowPower }: { lowPower: boolean }) {
           uScroll: { value: 0 },
           uVel: { value: 0 },
           uMouse: { value: new Vector2() },
+          uClick: { value: new Vector3(0, 0, 99) },
           uRes: { value: new Vector2(1, 1) },
           uBase: { value: new Color("#0C1120") },
           uC1: { value: new Vector3() },
@@ -37,6 +38,7 @@ export function Backdrop({ lowPower }: { lowPower: boolean }) {
     u.uScroll.value = world.chapterPos
     u.uVel.value = world.vel
     u.uMouse.value.set(world.mouse.sx, world.mouse.sy)
+    u.uClick.value.set(world.click.x, world.click.y, world.click.age)
     u.uRes.value.set(size.width, size.height)
     u.uC1.value.set(pal[0].r, pal[0].g, pal[0].b)
     u.uC2.value.set(pal[1].r, pal[1].g, pal[1].b)

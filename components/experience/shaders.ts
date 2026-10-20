@@ -63,7 +63,7 @@ precision highp float;
 varying vec2 vUv;
 uniform float uTime, uScroll, uVel;
 uniform vec2 uMouse, uRes;
-uniform vec3 uBase, uC1, uC2, uC3;
+uniform vec3 uBase, uC1, uC2, uC3, uClick;
 ${NOISE}
 float fbm(vec3 p){
   float a=.5, s=0.;
@@ -79,6 +79,12 @@ void main(){
   float aspect = uRes.x/uRes.y;
   vec2 uv = vUv*2.-vec2(1.);
   uv.x *= aspect;
+
+  // shockwave from the last press: a thin ring that expands and fades
+  vec2 dc = uv - uClick.xy*vec2(aspect,1.);
+  float ring = exp(-pow((length(dc)-uClick.z*1.9)*5.5,2.))*exp(-uClick.z*1.1);
+  uv += normalize(dc+vec2(1e-5))*ring*.09;
+
   vec2 m = uMouse*vec2(aspect,1.);
   float d = length(uv-m);
   uv -= (uv-m)*exp(-d*2.4)*.12;
@@ -99,6 +105,7 @@ void main(){
   col += mix(uC1,uC2,smoothstep(-.4,.6,q.x+f*.5))*pow(body,2.3)*.42;
   col += uC3*line*(.07+.45*v)*smoothstep(.15,.9,body+.15);
   col += uC1*exp(-d*d*1.6)*.07;
+  col += (uC3*.55+uC1*.25)*ring;
 
   float vig = smoothstep(2.0,.35,length(vUv*2.-vec2(1.)));
   col *= mix(.3,1.,vig);
@@ -179,19 +186,23 @@ void main(){
 export const planeFrag = /* glsl */ `
 precision highp float;
 uniform sampler2D uTex;
-uniform float uTexAspect, uPlaneAspect, uVel, uActive, uHover;
+uniform float uTexAspect, uPlaneAspect, uVel, uActive, uHover, uScroll;
 uniform vec3 uC;
 varying vec2 vUv;
 void main(){
-  vec2 s = vec2(1.);
-  if (uPlaneAspect > uTexAspect) s.y = uTexAspect/uPlaneAspect; else s.x = uPlaneAspect/uTexAspect;
-  vec2 uv = (vUv-.5)*s*(1.-.06*uHover-.04*uActive)+.5;
+  // tall captures fit the plane's width and scroll vertically with uScroll;
+  // wider ones are cropped to cover
+  float r = uTexAspect/uPlaneAspect;
+  float f = min(r,1.);
+  vec2 uv = vec2(r>1. ? (vUv.x-.5)/r+.5 : vUv.x, (1.-f)*(1.-uScroll)+vUv.y*f);
+  vec2 center = vec2(.5,(1.-f)*(1.-uScroll)+f*.5);
+  uv = (uv-center)*(1.-.05*uHover-.03*uActive)+center;
 
   float sh = abs(uVel)*.012 + uHover*.004;
   vec3 col = vec3(texture2D(uTex,uv+vec2(sh,0.)).r, texture2D(uTex,uv).g, texture2D(uTex,uv-vec2(sh,0.)).b);
 
   float lum = dot(col,vec3(.299,.587,.114));
-  col = mix(vec3(lum)*.55, col, .2+.8*uActive);
+  col = mix(vec3(lum)*.55, col, .2+.8*uActive)*.82;
   col *= mix(.55,1.,smoothstep(0.,.55,vUv.y));
 
   vec2 p = (vUv-.5)*vec2(uPlaneAspect,1.);

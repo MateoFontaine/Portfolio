@@ -14,7 +14,7 @@ export function Effects({ lowPower }: { lowPower: boolean }) {
     const a = aberration.current
     if (!a) return
     const v = Math.min(Math.abs(world.vel), 3)
-    a.offset.set(0.0004 + v * 0.0011, 0.0002 + v * 0.0007)
+    a.offset.set(0.0004 + v * 0.0011 + world.kick * 0.003, 0.0002 + v * 0.0007 + world.kick * 0.002)
   })
 
   return (

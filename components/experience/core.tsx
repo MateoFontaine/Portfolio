@@ -44,7 +44,7 @@ export function Core({ position, scale = 1, amp = 0.26, freq = 0.85, chapter, ri
     const u = material.uniforms
     u.uTime.value += dt * (world.reduced ? 0.15 : 1)
     const energy = Math.min(Math.abs(world.vel) * 0.18, 0.5)
-    u.uAmp.value = damp(u.uAmp.value, amp + energy, 5, dt)
+    u.uAmp.value = damp(u.uAmp.value, amp + energy + world.kick * 0.55, 9, dt)
     u.uC1.value.set(pal[0].r, pal[0].g, pal[0].b)
     u.uC2.value.set(pal[1].r, pal[1].g, pal[1].b)
     u.uC3.value.set(pal[2].r, pal[2].g, pal[2].b)
@@ -53,9 +53,9 @@ export function Core({ position, scale = 1, amp = 0.26, freq = 0.85, chapter, ri
     const g = group.current
     if (!g) return
     const near = 1 - Math.min(Math.abs(world.chapterPos - chapter), 1)
-    const s = scale * (0.9 + near * 0.12)
+    const s = scale * (0.9 + near * 0.12) * (1 + world.kick * 0.1)
     g.scale.setScalar(damp(g.scale.x, s, 4, dt))
-    g.rotation.y += dt * 0.12 + world.vel * dt * 0.4
+    g.rotation.y += dt * (0.12 + world.kick * 3) + world.vel * dt * 0.4
     g.rotation.x = damp(g.rotation.x, -world.mouse.sy * 0.35, 3, dt)
     g.rotation.z = damp(g.rotation.z, world.mouse.sx * 0.25, 3, dt)
   })

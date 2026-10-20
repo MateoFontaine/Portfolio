@@ -54,11 +54,8 @@ export function Loader() {
   }, [])
 
   return (
-    <div ref={root} className="fixed inset-0 z-[100] flex flex-col justify-between bg-ink p-6 md:p-10">
-      <div className="flex items-center justify-between">
-        <span className="mono-label">Mateo Fontaine</span>
-        <span className="mono-label">Portfolio ’{String(new Date().getFullYear()).slice(2)}</span>
-      </div>
+    <div id="loader" ref={root} className="fixed inset-0 z-[100] flex flex-col justify-between bg-ink p-6 md:p-10">
+      <span className="mono-label">Mateo Fontaine</span>
       <div className="flex items-end justify-between">
         <span className="font-display text-[clamp(5rem,22vw,18rem)] font-bold leading-[0.8] tracking-[-0.05em]">
           <span ref={counter}>000</span>
