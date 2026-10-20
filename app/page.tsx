@@ -1,72 +1,31 @@
-"use client"
+import { Scene } from "@/components/experience/scene"
+import { About } from "@/components/sections/about"
+import { Contact } from "@/components/sections/contact"
+import { Hero } from "@/components/sections/hero"
+import { Services } from "@/components/sections/services"
+import { Stack } from "@/components/sections/stack"
+import { Work } from "@/components/sections/work"
+import { Cursor } from "@/components/ui-kit/cursor"
+import { Loader } from "@/components/ui-kit/loader"
+import { Navigation } from "@/components/ui-kit/navigation"
+import { SmoothScroll } from "@/components/ui-kit/smooth-scroll"
 
-import { useEffect, useState } from "react"
-import { Navigation } from "@/components/navigation"
-import { Hero } from "@/components/hero"
-import { About } from "@/components/about"
-import { SkillsNetwork } from "@/components/skills-network"
-import { Work } from "@/components/work"
-import { Contact } from "@/components/contact"
-import { Footer } from "@/components/footer"
-import { CustomCursor } from "@/components/custom-cursor"
-
-export default function Portfolio() {
-  const [parallaxOffset, setParallaxOffset] = useState(0)
-
-  // Parallax effect for background - reduced on mobile
-  useEffect(() => {
-    const handleScroll = () => {
-      const isMobile = window.innerWidth < 768
-      const speed = isMobile ? 0.1 : 0.3
-      setParallaxOffset(window.scrollY * speed)
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
-
-  // Scroll animation observer - adds 'is-visible' class to elements with 'animate-on-scroll'
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible")
-          }
-        })
-      },
-      {
-        threshold: 0.1,
-        rootMargin: "0px 0px -50px 0px",
-      }
-    )
-
-    const animatedElements = document.querySelectorAll(".animate-on-scroll")
-    animatedElements.forEach((el) => observer.observe(el))
-
-    return () => {
-      animatedElements.forEach((el) => observer.unobserve(el))
-    }
-  }, [])
-
-  const scrollToSection = (sectionId: string) => {
-    document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" })
-  }
-
+export default function Page() {
   return (
-    <div className="min-h-screen bg-[#0C1120]">
-      <CustomCursor />
+    <>
+      <SmoothScroll />
+      <Scene />
+      <Loader />
+      <Cursor />
       <Navigation />
-
-      <main>
-        <Hero scrollToSection={scrollToSection} parallaxOffset={parallaxOffset} />
+      <main className="relative z-10">
+        <Hero />
         <About />
-        <SkillsNetwork />
+        <Services />
+        <Stack />
         <Work />
         <Contact />
       </main>
-
-      <Footer />
-    </div>
+    </>
   )
 }

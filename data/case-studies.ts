@@ -55,6 +55,6 @@ export const caseStudies: CaseStudy[] = [
     technologies: ["Astro.build", "TailwindCSS", "QR Codes", "TypeScript"],
     github: "https://github.com/MateoFontaine/Iam",
     demo: "https://iampaw.com.ar/",
-    image: "/Logo.jpg",
+    image: "/IamPaw.jpeg",
   },
 ]

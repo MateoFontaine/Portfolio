@@ -2,284 +2,92 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
+:root {
+  --ink: #0c1120;
+  --brand: #3a82ff;
 }
 
 html {
-  scroll-behavior: smooth;
+  background: var(--ink);
+  color-scheme: dark;
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 8px;
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
 }
 
-::-webkit-scrollbar-track {
-  @apply bg-[#0C1120];
+body {
+  background: var(--ink);
+  color: #fff;
+  font-family: "Space Grotesk", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-::-webkit-scrollbar-thumb {
-  @apply bg-[#334155] rounded-full;
+::selection {
+  background: var(--brand);
+  color: #fff;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  @apply bg-[#475569];
-}
-
-/* Scroll-triggered animations */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(20px);
-}
-
-.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 400ms ease-out, transform 400ms ease-out;
-}
-
-/* Hover lift effect */
-.hover-lift {
-  transition: transform 200ms ease-out;
-}
-
-.hover-lift:hover {
-  transform: translateY(-4px);
-}
-
-/* Background Grid - IDE/Terminal aesthetic */
-.bg-grid {
-  position: absolute;
-  inset: 0;
-  background-image:
-    linear-gradient(to right, rgba(59, 130, 246, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(59, 130, 246, 0.03) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 70%);
-}
-
-/* Subtle gradient overlay for depth */
-.bg-grid::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(ellipse at 50% 50%, transparent 0%, #0C1120 70%);
-}
-
-/* ===== CUSTOM CURSOR ===== */
-.cursor-dot {
-  width: 8px;
-  height: 8px;
-  background: #3B82FF;
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9999;
-  transition: transform 0.1s ease-out;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-outline {
-  width: 40px;
-  height: 40px;
-  border: 2px solid #3B82FF;
-  border-radius: 50%;
-  position: fixed;
-  pointer-events: none;
-  z-index: 9998;
-  transition: transform 0.2s ease-out, opacity 0.2s ease-out;
-  transform: translate(-50%, -50%);
-  opacity: 0.5;
-}
-
-.cursor-hidden {
-  opacity: 0;
-}
-
-/* ===== 3D CARD TILT ===== */
-.card-3d {
-  transform-style: preserve-3d;
-  transition: transform 0.2s ease-out;
-}
-
-.card-glow {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(circle at var(--mouse-x) var(--mouse-y), rgba(59, 130, 246, 0.15), transparent 50%);
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.2s ease-out;
-  border-radius: inherit;
-}
-
-.card-3d:hover .card-glow {
-  opacity: 1;
-}
-
-/* ===== TYPING EFFECT ===== */
-.typing-cursor {
-  display: inline-block;
-  width: 3px;
-  height: 1.2em;
-  background: #3B82FF;
-  margin-left: 2px;
-  animation: blink 1s step-end infinite;
-  vertical-align: text-bottom;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-/* Hide cursor on mobile */
-@media (max-width: 768px) {
-  .typing-cursor {
-    display: none;
+@layer components {
+  .mono-label {
+    @apply font-mono text-[11px] uppercase tracking-[0.18em] text-mist;
+  }
+  .glass {
+    @apply border border-white/10 bg-ink/55 backdrop-blur-xl;
+    box-shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  }
+  .tilt-card {
+    transform-style: preserve-3d;
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.25s ease-out;
+    will-change: transform;
+  }
+  .tilt-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: var(--glare, 0);
+    transition: opacity 0.3s;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.11), transparent 60%);
+  }
+  .link-underline {
+    background: linear-gradient(currentColor, currentColor) 0 100% / 0 1px no-repeat;
+    transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-underline:hover {
+    background-size: 100% 1px;
   }
 }
 
-/* ===== SCROLL ANIMATION STAGGER ===== */
-.stagger-1 { transition-delay: 0ms; }
-.stagger-2 { transition-delay: 100ms; }
-.stagger-3 { transition-delay: 200ms; }
-.stagger-4 { transition-delay: 300ms; }
-.stagger-5 { transition-delay: 400ms; }
-.stagger-6 { transition-delay: 500ms; }
-
-/* ===== HIDE CUSTOM CURSOR ON MOBILE ===== */
-@media (max-width: 768px) {
-  .cursor-dot,
-  .cursor-outline {
-    display: none;
+/* Custom cursor only where there is a real pointer */
+@media (hover: hover) and (pointer: fine) {
+  html.has-cursor,
+  html.has-cursor a,
+  html.has-cursor button {
+    cursor: none;
   }
 }
 
-/* ===== SKILLS NETWORK ANIMATIONS ===== */
-
-/* Pulse animation for nodes */
-@keyframes nodePulse {
-  0%, 100% { 
-    transform: scale(1); 
-    opacity: 1; 
-  }
-  50% { 
-    transform: scale(1.03); 
-    opacity: 0.85; 
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
-/* Data flow animation for connection lines */
-@keyframes flow {
-  from { 
-    stroke-dashoffset: 20; 
-  }
-  to { 
-    stroke-dashoffset: 0; 
-  }
-}
-
-/* Node subtle float animation */
-@keyframes nodeFloat {
-  0%, 100% {
-    transform: translate(-50%, -50%) translateY(0);
-  }
-  50% {
-    transform: translate(-50%, -50%) translateY(-3px);
-  }
-}
-
-/* Glow pulse effect */
-@keyframes glowPulse {
-  0%, 100% {
-    box-shadow: 0 0 15px var(--glow-color, rgba(59, 130, 246, 0.5));
-  }
-  50% {
-    box-shadow: 0 0 25px var(--glow-color, rgba(59, 130, 246, 0.7)), 0 0 40px var(--glow-color, rgba(59, 130, 246, 0.3));
-  }
-}
-
-/* Apply animations to network nodes */
-.skills-network-node {
-  animation: nodePulse 3s ease-in-out infinite;
-}
-
-.skills-network-node:nth-child(odd) {
-  animation-delay: 0.5s;
-}
-
-.skills-network-node:nth-child(even) {
-  animation-delay: 1s;
-}
-
-/* Connection line animation */
-.skills-connection-line {
-  animation: flow 20s linear infinite;
-}
-
-/* ===== ORBITAL SYSTEM ANIMATIONS ===== */
-
-/* Orbit rotation */
-@keyframes orbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-/* Counter-rotation to keep nodes upright */
-@keyframes counterOrbit {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-360deg); }
-}
-
-/* Core glow pulsing */
-@keyframes coreGlow {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 0.5;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
-}
-
-/* Icon glow pulse */
-@keyframes iconGlow {
-  0%, 100% {
-    filter: drop-shadow(0 0 5px currentColor);
-  }
-  50% {
-    filter: drop-shadow(0 0 15px currentColor);
-  }
-}
-
-/* Line flow animation */
-@keyframes lineFlow {
-  from {
-    stroke-dashoffset: 20;
-  }
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-/* Slow spin for orbit rings */
-@keyframes spinSlow {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-.animate-spin-slow {
-  animation: spinSlow 60s linear infinite;
+@keyframes scroll-cue {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 }
