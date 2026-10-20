@@ -80,7 +80,6 @@ export function Contact() {
             Devoys
           </a>
         </p>
-        <p className="mono-label">Next.js · Three.js · GSAP</p>
       </footer>
     </section>
   )
