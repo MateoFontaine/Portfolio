@@ -1,12 +1,12 @@
 "use client"
 
-import { useLayoutEffect, useMemo, useRef } from "react"
+import { useEffect, useLayoutEffect, useMemo, useRef } from "react"
 import { useFrame, useThree } from "@react-three/fiber"
 import { useTexture } from "@react-three/drei"
-import { Color, Group, ShaderMaterial, SRGBColorSpace, Texture } from "three"
+import { Color, Group, ShaderMaterial, SRGBColorSpace, Texture, TextureLoader } from "three"
 import { caseStudies } from "@/data/case-studies"
 import { KEYS, PROJECT_START } from "@/lib/path"
-import { damp, world } from "@/lib/world"
+import { damp, sceneReady, world } from "@/lib/world"
 import { planeFrag, planeVert } from "./shaders"
 import { pal } from "./state"
 
@@ -17,7 +17,7 @@ const pingPong = (x: number) => {
 }
 const smooth = (x: number) => x * x * (3 - 2 * x)
 
-function ProjectPlane({ index, image }: { index: number; image: string }) {
+function ProjectPlane({ index, image, preview }: { index: number; image: string; preview?: string }) {
   const narrow = useThree((s) => s.size.width < 768)
   const tex = useTexture(image) as Texture
   const group = useRef<Group>(null)
@@ -59,6 +59,32 @@ function ProjectPlane({ index, image }: { index: number; image: string }) {
     [tex],
   )
 
+  // The tall site capture is heavy: fetch it after the first frame instead of
+  // making the loader wait for it, then swap it in.
+  useEffect(() => {
+    if (!preview) return
+    let cancelled = false
+    let loaded: Texture | null = null
+    sceneReady.on(() => {
+      window.setTimeout(() => {
+        if (cancelled) return
+        new TextureLoader().load(preview, (t) => {
+          if (cancelled) return t.dispose()
+          t.colorSpace = SRGBColorSpace
+          t.anisotropy = 8
+          loaded = t
+          const img = t.image as HTMLImageElement
+          material.uniforms.uTex.value = t
+          material.uniforms.uTexAspect.value = img.width / img.height
+        })
+      }, 800 + index * 500)
+    })
+    return () => {
+      cancelled = true
+      loaded?.dispose()
+    }
+  }, [preview, material, index])
+
   useFrame((_, rawDt) => {
     const dt = Math.min(rawDt, 0.05)
     const u = material.uniforms
@@ -97,7 +123,7 @@ export function Gallery() {
   return (
     <>
       {caseStudies.map((project, i) => (
-        <ProjectPlane key={project.id} index={i} image={project.preview ?? project.image} />
+        <ProjectPlane key={project.id} index={i} image={project.image} preview={project.preview} />
       ))}
     </>
   )
